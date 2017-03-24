@@ -1,0 +1,71 @@
+#
+# energy_mpi input file
+#
+
+# Structure
+
+psf ./helix_ready.psf
+pdb ./helix_ready.pdb
+output ./teste.pdb
+parameters ./par_all27_prot_na.prm
+
+#restart # Restart from previous run
+
+# Use constraints
+
+useconstraints yes   # yes|no
+constraints ./helix_constraints.dat
+
+# Force field parameters
+
+bonds     yes      # yes|no
+angles    yes      # yes|no
+dihedrals yes      # yes|no
+impropers yes      # yes|no
+nonbonded yes      # yes|no|backbone - (optionally, use only backbone non-bonded interaction)
+sidechains polar # neutral|polar - (neutral uses null charges for all side-chain atoms)
+dielectric 77.8    # water dielectic constant (weights side-chain electrostatic interactions)
+cutoff 100.
+useroutine linearshort # simple|linearshort|linkedcell
+
+# Number of individuals of genetic algorithm
+
+nind 500       # Number of individuals of the population
+nsurvive 200   # Number of individuals from which new ones are created
+
+# Genetic algorithm parameters
+
+combine yes    # yes|no - Combine best individuals to form new ones
+mirror yes     # yes|no - Try sometimes to invert all dihedrals
+mutations yes  # yes|no - Mutate individuals
+maxpop -1      # Maximum number of populations (stops everything, use -1 to never stop)
+maxmut 10      # maximum number of mutations per trial
+probmut 0.9    # Probability of mutation ( 0. <= P <= 1. )
+muttype 1      # Type of dihedral rotation: 0 is random; 1 is following Ramanchandran 
+mutbin 0.1     # For random rotations, perturb the angles in +/- mutbin*360 degrees
+seed random    # Seed for random number generator (integer number, or 'random')
+
+# Parameters of the optimization method
+
+minimize yes         # yes|no - Use local optimization method
+minmethod cgnewton   # cgnewton|spg - Which method to use
+maxfeval 500         # Maximum number of functional evalutations 
+maxcg 50             # Maximum number of CG iterations for cgnewton
+minprint no          # no|screen|filename - Print details of local optimization
+nshake 5             # try 'nshake' small perturbations to escape from local minima
+
+# Execution control parameters
+       
+print 1    # 0|1 - Print only best individuals (zero) or all 
+pause no   # yes|no - Pause at every nind individuals to see
+#testgradient # Uncomment to test gradient (debug only)
+
+# Use structure provided as one of the individuals? (if you have a good guess...)
+
+useinput no # yes|no - Use the input structure as part of the population 
+
+# End execution
+
+#terminate  # Uncomment will stop the execution and end gracefully
+
+
