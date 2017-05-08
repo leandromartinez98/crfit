@@ -3,11 +3,16 @@
 !
 
 subroutine init_random_number(iseed)
-  integer :: i, seed(12), iseed
-  do i = 1, 12
+  implicit none
+  integer :: i, iseed, size
+  integer, allocatable :: seed(:)
+  call random_seed(size=size)
+  allocate(seed(size))
+  do i = 1, size
     seed(i) = i*iseed
   end do
   call random_seed(put=seed)
+  deallocate(seed)
   return
 end subroutine init_random_number
 
